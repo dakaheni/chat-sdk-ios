@@ -145,7 +145,11 @@
     NSLog(@"Position: %i", position);
     
     // We only want to show the user picture if it is the latest message from the user
-    if (position & BChatSDK.config.showMessageAvatarAtPosition) {
+    //
+    // 11/05/2019
+    // Or we can also show a profile picture beside each message cell by setting a value to
+    // BChatSDK.config.showProfilePictureOnEveryCell, depends on the project requirements.
+    if ((position & BChatSDK.config.showMessageAvatarAtPosition) || BChatSDK.config.showProfilePictureOnEveryCell) {
         if (message.userModel) {
             [_profilePicture loadAvatar:message.userModel];
             

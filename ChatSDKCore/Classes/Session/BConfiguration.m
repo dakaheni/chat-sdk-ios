@@ -23,6 +23,7 @@
 @synthesize defaultServer;
 @synthesize shouldOpenChatWhenPushNotificationClicked;
 @synthesize loginUsernamePlaceholder;
+@synthesize showProfilePictureOnEveryCell;
 @synthesize defaultAvatarURL;
 @synthesize defaultBlankAvatar;
 @synthesize timeFormat;
