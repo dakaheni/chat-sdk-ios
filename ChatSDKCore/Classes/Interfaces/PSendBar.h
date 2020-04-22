@@ -17,6 +17,7 @@
 -(BOOL) resignTextViewFirstResponder;
 -(void) becomeTextViewFirstResponder;
 -(void) setMaxLines: (NSInteger) maxLines;
+-(void) setMaxVisibleLines: (NSInteger) maxLines;
 -(void) setMaxCharacters: (NSInteger) maxCharacters;
 
 @end

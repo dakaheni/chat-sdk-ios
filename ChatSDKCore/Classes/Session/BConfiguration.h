@@ -29,7 +29,7 @@ typedef enum {
     NSMutableDictionary * _messageBubbleMargin;
 }
 
-// Should we ask the user to allow notifications when the app initially loads up? 
+// Should we ask the user to allow notifications when the app initially loads up?
 @property (nonatomic, readwrite) BOOL shouldAskForNotificationsPermission;
     
 // Background color of messages: hex value like "FFFFFF"
@@ -101,6 +101,7 @@ typedef enum {
 
 // The message view text input box, max lines and characters
 @property (nonatomic, readwrite) int textInputViewMaxLines;
+@property (nonatomic, readwrite) int textInputViewMaxVisibleLines;
 @property (nonatomic, readwrite) int textInputViewMaxCharacters;
 @property (nonatomic, readwrite) NSString *textInputBackgroundColor;
 @property (nonatomic, readwrite) NSString *textInputTextColor;

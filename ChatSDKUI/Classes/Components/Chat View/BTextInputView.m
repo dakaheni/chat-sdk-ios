@@ -18,16 +18,20 @@
 #define bFontSize 19
 #define bMaxLines 5
 #define bMinLines 1
+#define bMaxVisibleLines 5
 #define bMaxCharacters 0
 
 @implementation BTextInputView
 
 @synthesize textView = _textView;
-@synthesize maxLines, minLines, maxCharacters;
+@synthesize maxLines, minLines, maxVisibleLines, maxCharacters;
 @synthesize sendBarDelegate = _sendBarDelegate;
 @synthesize optionsButton = _optionsButton;
 @synthesize sendButton = _sendButton;
 @synthesize placeholderLabel = _placeholderLabel;
+
+CGFloat maxTextViewHeight = 0;
+int currentNumberOfLines = 0;
 
 -(instancetype) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -39,6 +43,7 @@
         // Decide how many lines the message should have
         minLines = bMinLines;
         maxLines = bMaxLines;
+        maxVisibleLines = bMaxVisibleLines;
         maxCharacters = bMaxCharacters;
         
         // Set the text color
@@ -383,7 +388,9 @@
     NSInteger numberOfLines = [self getTextHeight:newText]/textView.font.lineHeight;
     numberOfLines = MAX(numberOfLines, [newText componentsSeparatedByString:@"\n"].count);
     
-    if (numberOfLines > maxLines) {
+    currentNumberOfLines = numberOfLines;
+    
+    if (maxLines > 0 && numberOfLines > maxLines) {
         return NO;
     }
     
@@ -486,7 +493,12 @@
                                                   context:nil];
         
         CGFloat measuredHeight = ceilf(CGRectGetHeight(size) + topBottomPadding);
-        return measuredHeight;
+                
+        if(currentNumberOfLines <= maxVisibleLines) {
+            maxTextViewHeight = measuredHeight;
+        }
+        
+        return maxTextViewHeight;
     }
     else
     {

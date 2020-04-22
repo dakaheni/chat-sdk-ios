@@ -31,6 +31,7 @@
     [super viewDidLoad];
     
     [_sendBarView setMaxLines:BChatSDK.config.textInputViewMaxLines];
+    [_sendBarView setMaxVisibleLines:BChatSDK.config.textInputViewMaxVisibleLines];
     [_sendBarView setMaxCharacters:BChatSDK.config.textInputViewMaxCharacters];
 
     // Set the title

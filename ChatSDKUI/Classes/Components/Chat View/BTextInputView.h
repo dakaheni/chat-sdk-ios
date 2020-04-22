@@ -38,6 +38,7 @@
 @property (nonatomic, readwrite) NSInteger maxCharacters;
 @property (nonatomic, readwrite) NSInteger maxLines;
 @property (nonatomic, readwrite) NSInteger minLines;
+@property (nonatomic, readwrite) NSInteger maxVisibleLines;
 @property (nonatomic, readwrite) UIButton * optionsButton;
 @property (nonatomic, readwrite) UIButton * sendButton;
 @property (nonatomic, readonly) UILabel * placeholderLabel;
