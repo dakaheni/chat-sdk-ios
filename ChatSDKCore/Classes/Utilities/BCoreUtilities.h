@@ -30,6 +30,7 @@
 
 +(UIColor*)colorWithHexString:(NSString*)hex;
 +(UIColor*)colorWithHexString:(NSString*)hex withColorWeight: (float) weight;
++(UIColor*)colorWithAlphaHexString:(NSString*)hex;
 +(NSString *) colorToString: (UIColor *) color;
 +(UIColor *) stringToColor: (NSString *) color;
 
