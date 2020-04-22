@@ -42,8 +42,8 @@
         maxCharacters = bMaxCharacters;
         
         // Set the text color
-        _placeholderColor = [UIColor darkGrayColor];
-        _textColor = [UIColor blackColor];
+        _placeholderColor = [BCoreUtilities colorWithAlphaHexString:BChatSDK.config.textInputPlaceholderColor];
+        _textColor = [BCoreUtilities colorWithAlphaHexString:BChatSDK.config.textInputTextColor];
 
         // Create an options button which shows an action sheet
         _optionsButton = [UIButton buttonWithType:UIButtonTypeCustom];

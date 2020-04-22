@@ -27,4 +27,8 @@
 #define bDefaultUserNameLabelSize 14
 #define bDefaultTextColor @"000000"
 
+#define bDefaultTextInputBackgroundColor @"FFFFFF"
+#define bDefaultTextInputTextColor @"000000"
+#define bDefaultTextInputPlaceholderColor @"555555"
+
 #endif /* BCoreDefines_h */

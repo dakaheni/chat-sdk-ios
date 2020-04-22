@@ -102,6 +102,9 @@ typedef enum {
 // The message view text input box, max lines and characters
 @property (nonatomic, readwrite) int textInputViewMaxLines;
 @property (nonatomic, readwrite) int textInputViewMaxCharacters;
+@property (nonatomic, readwrite) NSString *textInputBackgroundColor;
+@property (nonatomic, readwrite) NSString *textInputTextColor;
+@property (nonatomic, readwrite) NSString *textInputPlaceholderColor;
 
 @property(nonatomic, readwrite) BOOL publicChatAutoSubscriptionEnabled;
 

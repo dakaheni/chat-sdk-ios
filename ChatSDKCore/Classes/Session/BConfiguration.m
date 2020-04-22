@@ -84,6 +84,9 @@
 
 @synthesize textInputViewMaxLines;
 @synthesize textInputViewMaxCharacters;
+@synthesize textInputBackgroundColor;
+@synthesize textInputTextColor;
+@synthesize textInputPlaceholderColor;
 @synthesize shouldAskForNotificationsPermission;
 @synthesize xmppAuthType;
 
