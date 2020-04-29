@@ -209,6 +209,8 @@ int currentNumberOfLines = 0;
             [BChatSDK.core sendMessageWithText:newMessage withThreadEntityID:_sendBarDelegate.threadEntityID];
         }
         
+        currentNumberOfLines = 0;
+        
         _textView.text = @"";
         [self textViewDidChange:_textView];
     }
