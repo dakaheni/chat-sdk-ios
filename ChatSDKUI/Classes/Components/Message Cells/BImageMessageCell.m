@@ -11,7 +11,7 @@
 #import <ChatSDK/Core.h>
 #import <ChatSDK/PElmMessage.h>
 #import <ChatSDK/UI.h>
-
+#import <ChatSDK/ChatSDK-Swift.h>
 
 @implementation BImageMessageCell
 
@@ -33,8 +33,8 @@
     return self;
 }
 
--(void) setMessage: (id<PElmMessage>) message withColorWeight:(float)colorWeight {
-    [super setMessage:message withColorWeight:colorWeight];
+-(void) setMessage: (id<PElmMessage>) message isSelected: (BOOL) selected {
+    [super setMessage:message isSelected:selected];
     
     // Get rid of the bubble for images
     self.bubbleImageView.image = Nil;
@@ -54,7 +54,7 @@
     
     UIImage * placeholder = [UIImage imageWithData:message.placeholder];
     if (!placeholder) {
-        placeholder = [NSBundle uiImageNamed:bDefaultPlaceholderImage];
+        placeholder = [Icons getWithName:Icons.defaultPlaceholder];
     }
         
     [imageView sd_setImageWithURL:message.imageURL

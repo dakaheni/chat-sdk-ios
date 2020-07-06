@@ -38,6 +38,7 @@
     if (self) {
         
         _messageManager = [BMessageManager new];
+        _selectedIndexPaths = [NSMutableArray new];
         
         // Add a tap recognizer so when we tap the table we dismiss the keyboard
         _tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped)];
@@ -67,7 +68,7 @@
 }
 
 // The text input view sits on top of the keyboard
--(void) setupTextInputView {
+-(void) setupTextInputView: (BOOL) forceSuper {
     _sendBarView = [BChatSDK.ui sendBarView];
     [_sendBarView setSendBarDelegate:self];
     
@@ -79,10 +80,7 @@
     
     // Constrain the table to the top of the toolbar
     tableView.keepBottomOffsetTo(_sendBarView).equal = 2;
-    
-//    tableView.layer.borderColor = [UIColor redColor].CGColor;
-//    tableView.layer.borderWidth = 2;
-    
+        
 }
 
 -(void) registerMessageCells {
@@ -129,8 +127,11 @@
 // or a collection view shown in the keyboard overlay
 -(void) setupKeyboardOverlay {
     _keyboardOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.fh, self.view.fw, 0)];
-    _keyboardOverlay.backgroundColor = [UIColor whiteColor];
     
+    if (@available(iOS 13.0, *)) {
+        _keyboardOverlay.backgroundColor = [UIColor systemBackgroundColor];
+    } 
+
     _optionsHandler = [BChatSDK.ui chatOptionsHandlerWithDelegate:self];
     
     if(_optionsHandler.keyboardView) {
@@ -277,7 +278,7 @@
     [_refreshControl addTarget:self action:@selector(tableRefreshed) forControlEvents:UIControlEventValueChanged];
     [tableView addSubview:_refreshControl];
     
-    [self setupTextInputView];
+    [self setupTextInputView: NO];
 
     [self registerMessageCells];
 
@@ -286,7 +287,26 @@
     [self updateInterfaceForReachabilityStateChange];
 
     [self setupKeyboardOverlay];
+    
+    UIGestureRecognizer * recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+    [tableView addGestureRecognizer:recognizer];
+    
 
+}
+
+-(void) onLongPress: (UILongPressGestureRecognizer *) recognizer {
+    CGPoint point = [recognizer locationInView:tableView];
+    NSIndexPath * path = [tableView indexPathForRowAtPoint:point];
+    if (path) {
+        if (![_selectedIndexPaths containsObject:path]) {
+            [_selectedIndexPaths addObject:path];
+        }
+        [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+-(BOOL) selectionModeEnabled {
+    return _selectedIndexPaths.count > 0;
 }
 
 -(void) tableRefreshed {
@@ -416,7 +436,7 @@
         [BChatSDK.encryption decryptMessage:message];
     }
     
-    BMessageCell<BMessageDelegate> * messageCell;
+    BMessageCell * messageCell;
     
     // We want to check if the message is a premium type but without the libraries added
     // Without this check the app crashes if the user doesn't have premium cell types
@@ -433,12 +453,8 @@
     }
 
     messageCell.navigationController = self.navigationController;
-
-    // Add a gradient to the cells
-    //float colorWeight = ((float) indexPath.row / (float) self.messages.count) * 0.15 + 0.85;
-    float colorWeight = 1;
-
-    [messageCell setMessage:message withColorWeight:colorWeight];
+    
+    [messageCell setMessage:message isSelected:[_selectedIndexPaths containsObject:indexPath]];
     
     return messageCell;
 }
@@ -504,6 +520,16 @@
 
 - (void)tableView:(UITableView *)tableView_ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BMessageCell * cell = (BMessageCell *) [tableView_ cellForRowAtIndexPath:indexPath];
+    
+    if (self.selectionModeEnabled) {
+        if ([_selectedIndexPaths containsObject:indexPath]) {
+            [_selectedIndexPaths removeObject:indexPath];
+        } else {
+            [_selectedIndexPaths addObject:indexPath];
+        }
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        return;
+    }
     
     NSURL * url = Nil;
     if ([cell isKindOfClass:[BImageMessageCell class]]) {
@@ -588,7 +614,7 @@
         [BFileCache cacheFileFromURL:url withFileName:meta[bMessageText] andCacheName:cell.message.entityID]
         .thenOnMain(^id(NSURL * cacheUrl) {
             NSLog(@"Cache URL: %@", [cacheUrl absoluteString]);
-            [cell setMessage:cell.message];
+            [cell setMessage:cell.message isSelected:[_selectedIndexPaths containsObject:indexPath]];
             
             [cell hideActivityIndicator];
             
@@ -681,14 +707,19 @@
     __weak __typeof__(self) weakSelf = self;
 
     id<PElmMessage> message = [self messageForIndexPath:indexPath];
-    if (message.senderIsMe) {
+    if (message.senderIsMe && BChatSDK.config.messageDeletionEnabled) {
         UITableViewRowAction * button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
                                                                            title:[NSBundle t:bDelete]
                                                                          handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
             [BChatSDK.moderation deleteMessage:message.entityID];
         }];
         
-        button.backgroundColor = [UIColor redColor];
+        if (@available(iOS 13.0, *)) {
+            button.backgroundColor = [UIColor systemRedColor];
+        } else {
+            button.backgroundColor = [UIColor redColor];
+        }
+
         return @[button];
 
     }
@@ -705,7 +736,11 @@
             
         }];
         
-        button.backgroundColor = message.flagged.intValue ? [UIColor darkGrayColor] : [UIColor redColor];
+        if (@available(iOS 13.0, *)) {
+            button.backgroundColor = message.flagged.intValue ? [UIColor systemGrayColor] : [UIColor systemRedColor];
+        } else {
+            button.backgroundColor = message.flagged.intValue ? [UIColor grayColor] : [UIColor redColor];
+        }
         
         return @[button];
     }

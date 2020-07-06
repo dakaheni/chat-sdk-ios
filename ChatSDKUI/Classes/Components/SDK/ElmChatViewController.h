@@ -63,6 +63,8 @@
     BOOL _loadingMessages;
     
     BLazyReloadManager * _lazyReloadManager;
+    
+    NSMutableArray * _selectedIndexPaths;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
@@ -103,6 +105,6 @@
 -(void) keyboardWillShow: (NSNotification *) notification;
 -(void) keyboardWillHide: (NSNotification *) notification;
 
--(void) setupTextInputView;
+-(void) setupTextInputView: (BOOL) forceSuper;
 
 @end

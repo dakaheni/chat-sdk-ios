@@ -11,54 +11,52 @@
 
  @implementation BConfiguration
 
- @synthesize messageColorMe;
- @synthesize messageColorReply;
- @synthesize rootPath;
- @synthesize appBadgeEnabled;
- @synthesize defaultUserNamePrefix;
- @synthesize defaultUserName = _defaultUserName;
- @synthesize showEmptyChats;
- @synthesize allowUsersToCreatePublicChats;
- @synthesize anonymousLoginEnabled;
- @synthesize defaultServer;
- @synthesize shouldOpenChatWhenPushNotificationClicked;
- @synthesize loginUsernamePlaceholder;
- @synthesize showProfilePictureOnEveryCell;
- @synthesize defaultAvatarURL;
- @synthesize defaultBlankAvatar;
- @synthesize timeFormat;
- @synthesize chatMessagesToLoad;
- @synthesize messagesToLoadPerBatch;
- @synthesize pushNotificationSound;
- @synthesize firebaseGoogleServicesPlistName;
- @synthesize firebaseShouldConfigureAutomatically;
- @synthesize locationMessagesEnabled;
- @synthesize imageMessagesEnabled;
- @synthesize googleMapsApiKey;
- @synthesize clearDataWhenRootPathChanges;
- @synthesize databaseVersion;
- @synthesize clearDatabaseWhenDataVersionChanges;
- @synthesize showUserAvatarsOn1to1Threads;
- @synthesize enableMessageModerationTab;
- @synthesize showLocalNotifications;
- @synthesize onlySendPushToOfflineUsers;
- @synthesize userChatInfoEnabled;
- @synthesize forgotPasswordEnabled;
- @synthesize termsAndConditionsEnabled;
- @synthesize clientPushEnabled;
- @synthesize defaultGroupChatAvatar;
- @synthesize prefersLargeTitles;
- @synthesize shouldOpenChatWhenPushNotificationClickedOnlyIfTabBarVisible;
- @synthesize showPublicThreadsUnreadMessageBadge;
- @synthesize messageHistoryDownloadLimit;
- @synthesize messageDeletionListenerLimit;
- @synthesize readReceiptMaxAgeInSeconds;
- @synthesize searchIndexes;
- @synthesize showProfileViewOnTap;
- @synthesize showLocalNotificationsForPublicChats;
- @synthesize disablePresence;
- @synthesize disableProfileUpdateOnAuthentication;
- @synthesize developmentModeEnabled;
+@synthesize rootPath;
+@synthesize appBadgeEnabled;
+@synthesize defaultUserNamePrefix;
+@synthesize defaultUserName = _defaultUserName;
+@synthesize showEmptyChats;
+@synthesize allowUsersToCreatePublicChats;
+@synthesize anonymousLoginEnabled;
+@synthesize defaultServer;
+@synthesize shouldOpenChatWhenPushNotificationClicked;
+@synthesize loginUsernamePlaceholder;
+@synthesize defaultAvatarURL;
+@synthesize timeFormat;
+@synthesize chatMessagesToLoad;
+@synthesize messagesToLoadPerBatch;
+@synthesize pushNotificationSound;
+@synthesize firebaseGoogleServicesPlistName;
+@synthesize firebaseShouldConfigureAutomatically;
+@synthesize locationMessagesEnabled;
+@synthesize imageMessagesEnabled;
+@synthesize googleMapsApiKey;
+@synthesize clearDataWhenRootPathChanges;
+@synthesize databaseVersion;
+@synthesize clearDatabaseWhenDataVersionChanges;
+@synthesize showUserAvatarsOn1to1Threads;
+@synthesize enableMessageModerationTab;
+@synthesize showLocalNotifications;
+@synthesize onlySendPushToOfflineUsers;
+@synthesize userChatInfoEnabled;
+@synthesize forgotPasswordEnabled;
+@synthesize termsAndConditionsEnabled;
+@synthesize clientPushEnabled;
+@synthesize prefersLargeTitles;
+@synthesize shouldOpenChatWhenPushNotificationClickedOnlyIfTabBarVisible;
+@synthesize showPublicThreadsUnreadMessageBadge;
+@synthesize messageHistoryDownloadLimit;
+@synthesize messageDeletionListenerLimit;
+@synthesize readReceiptMaxAgeInSeconds;
+@synthesize searchIndexes;
+@synthesize showProfileViewOnTap;
+@synthesize showLocalNotificationsForPublicChats;
+@synthesize disablePresence;
+@synthesize disableProfileUpdateOnAuthentication;
+@synthesize developmentModeEnabled;
+
+@synthesize messageColorMe;
+@synthesize messageColorReply;
 
  @synthesize vibrateOnNewMessage;
 
@@ -99,142 +97,147 @@
  @synthesize remote;
  @synthesize remoteConfigEnabled;
 
- @synthesize firebaseApp;
- @synthesize firebaseStorageURL;
- @synthesize firebaseDatabaseURL;
- @synthesize firebaseFunctionsRegion;
+@synthesize firebaseApp;
+@synthesize firebaseStorageURL;
+@synthesize firebaseDatabaseURL;
+@synthesize firebaseFunctionsRegion;
+@synthesize enableWebCompatibility;
+@synthesize enableCompatibilityWithV4;
 
- -(instancetype) init {
-     if((self = [super init])) {
-         
-         _messageBubbleMargin = [NSMutableDictionary new];
-         _messageBubblePadding = [NSMutableDictionary new];
-         
-         messageColorMe = bDefaultMessageColorMe;
-         messageColorReply = bDefaultMessageColorReply;
-         rootPath = @"default";
-         appBadgeEnabled = YES;
-         
-         [self setDefaultUserNamePrefix:@"ChatSDK"];
+@synthesize messageDeletionEnabled;
 
-         showEmptyChats = YES;
-         allowUsersToCreatePublicChats = NO;
-                 
-         defaultAvatarURL = [NSString stringWithFormat:@"http://flathash.com/%@.png", self.defaultUserName];
-         
-         clientPushEnabled = NO;
-         
-         remote = [NSMutableDictionary new];
-         remoteConfigEnabled = NO;
-         
-         timeFormat = @"HH:mm";
-         
-         anonymousLoginEnabled = YES;
-         defaultServer = bServerXMPP;
-         
-         shouldOpenChatWhenPushNotificationClicked = YES;
-         onlySendPushToOfflineUsers = NO;
-                 
-         loginUsernamePlaceholder = Nil;
-         
-         pushNotificationSound = @"default";
-         
-         messagesToLoadPerBatch = 100;
-         chatMessagesToLoad = messagesToLoadPerBatch;
+-(instancetype) init {
+    if((self = [super init])) {
+        
+        _messageBubbleMargin = [NSMutableDictionary new];
+        _messageBubblePadding = [NSMutableDictionary new];
+        
+        rootPath = @"default";
+        appBadgeEnabled = YES;
+        
+        [self setDefaultUserNamePrefix:@"ChatSDK"];
 
-         audioMessageMaxLengthSeconds = 300;
-         
-         firebaseShouldConfigureAutomatically = YES;
-         
-         locationMessagesEnabled = YES;
-         imageMessagesEnabled = YES;
-         termsAndConditionsEnabled = YES;
-         
-         showPublicThreadsUnreadMessageBadge = YES;
-         
-         prefersLargeTitles = YES;
-         
-         forgotPasswordEnabled = YES;
-         
-         databaseVersion = @"1";
-         clearDatabaseWhenDataVersionChanges = NO;
-         showUserAvatarsOn1to1Threads = YES;
-         
-         showLocalNotifications = YES;
-         showLocalNotificationsForPublicChats = NO;
-         
-         shouldAskForNotificationsPermission = YES;
-         
-         defaultBlankAvatar = [NSBundle imageNamed:bDefaultProfileImage bundle:bCoreBundleName];
-         defaultGroupChatAvatar = [NSBundle imageNamed:bDefaultPublicGroupImage bundle:bCoreBundleName];
-         
-         showProfileViewOnTap = YES;
-         
-         rootPath = [BSettingsManager firebaseRootPath];
-                 
-         anonymousLoginEnabled = [BSettingsManager anonymousLoginEnabled];
-         
-         userChatInfoEnabled = YES;
-         
-         maxImageDimension = 600;
-         
-         inviteByEmailTitle = [BSettingsManager property: bEmailTitle forModule: @"contact_book"];
-         inviteByEmailBody = [BSettingsManager property: bEmailBody forModule: @"contact_book"];
-         inviteBySMSBody = [BSettingsManager property: bSMSBody forModule: @"contact_book"];
-         
-         shouldOpenChatWhenPushNotificationClickedOnlyIfTabBarVisible = NO;
-         
-         // Try to pre-configure XMPP from plist for backwards compatibility
-         [self configureXMPPFromPlist];
-         
-         xmppMucMessageHistory = 20;
-         
-         messageDeletionListenerLimit = 30;
-         messageHistoryDownloadLimit = 30;
-         readReceiptMaxAgeInSeconds = 7 * bDays;
-         
-         textInputViewMaxCharacters = 0;
-         textInputViewMaxLines = 5;
-         textInputViewMaxVisibleLines = 5;
-         
-         xmppAuthType = @"default";
+        showEmptyChats = YES;
+        allowUsersToCreatePublicChats = NO;
+                
+        defaultAvatarURL = [NSString stringWithFormat:@"http://flathash.com/%@.png", self.defaultUserName];
+        
+        clientPushEnabled = NO;
+        
+        remote = [NSMutableDictionary new];
+        remoteConfigEnabled = NO;
+        
+        timeFormat = @"HH:mm";
+        
+        anonymousLoginEnabled = YES;
+        defaultServer = bServerXMPP;
+        
+        shouldOpenChatWhenPushNotificationClicked = YES;
+        onlySendPushToOfflineUsers = NO;
+        messageDeletionEnabled = YES;
+                
+        loginUsernamePlaceholder = Nil;
+        
+        pushNotificationSound = @"default";
+        
+        messagesToLoadPerBatch = 100;
+        chatMessagesToLoad = messagesToLoadPerBatch;
 
-         _termsOfServiceURL = @"https://chatsdk.co/terms-and-conditions";
-         
-         nearbyUserDistanceBands = @[@1000, @5000, @10000, @50000];
-         nearbyUsersMinimumLocationChangeToUpdateServer = 50;
-         
-         publicChatRoomLifetimeMinutes = 7 * 60 * 24;
-         
-         searchIndexes = @[bUserNameKey, bUserEmailKey, bUserPhoneKey, bUserNameLowercase];
-         
-         vibrateOnNewMessage = YES;
-         
-         showMessageAvatarAtPosition = bMessagePosLast;
-         
-         messageBubbleMaskFirst = @"chat_bubble_right_0S.png";
-         messageBubbleMaskMiddle = @"chat_bubble_right_SS.png";
-         messageBubbleMaskLast = @"chat_bubble_right_ST.png";
-         messageBubbleMaskSingle = @"chat_bubble_right_0T.png";
-         
-         nameLabelPosition = bNameLabelPositionBottom;
-         combineTimeWithNameLabel = NO;
-         
-         publicChatAutoSubscriptionEnabled = NO;
-         
-     }
-     return self;
- }
+        audioMessageMaxLengthSeconds = 300;
+        
+        firebaseShouldConfigureAutomatically = YES;
+        
+        locationMessagesEnabled = YES;
+        imageMessagesEnabled = YES;
+        termsAndConditionsEnabled = YES;
+        
+        showPublicThreadsUnreadMessageBadge = YES;
+        
+        prefersLargeTitles = YES;
+        
+        forgotPasswordEnabled = YES;
+        
+        databaseVersion = @"1";
+        clearDatabaseWhenDataVersionChanges = NO;
+        showUserAvatarsOn1to1Threads = YES;
+        
+        showLocalNotifications = YES;
+        showLocalNotificationsForPublicChats = NO;
+        
+        shouldAskForNotificationsPermission = YES;
+                
+        showProfileViewOnTap = YES;
+        
+        rootPath = [BSettingsManager firebaseRootPath];
+                
+        anonymousLoginEnabled = [BSettingsManager anonymousLoginEnabled];
+        
+        userChatInfoEnabled = YES;
+        
+        maxImageDimension = 600;
+        
+        inviteByEmailTitle = [BSettingsManager property: bEmailTitle forModule: @"contact_book"];
+        inviteByEmailBody = [BSettingsManager property: bEmailBody forModule: @"contact_book"];
+        inviteBySMSBody = [BSettingsManager property: bSMSBody forModule: @"contact_book"];
+        
+        shouldOpenChatWhenPushNotificationClickedOnlyIfTabBarVisible = NO;
+        
+        // Try to pre-configure XMPP from plist for backwards compatibility
+        [self configureXMPPFromPlist];
+        
+        xmppMucMessageHistory = 20;
+        
+        messageDeletionListenerLimit = 30;
+        messageHistoryDownloadLimit = 30;
+        readReceiptMaxAgeInSeconds = 7 * bDays;
+        
+        textInputViewMaxCharacters = 0;
+        textInputViewMaxLines = 5;
+        
+        xmppAuthType = @"default";
+
+        _termsOfServiceURL = @"https://chatsdk.co/terms-and-conditions";
+        
+        nearbyUserDistanceBands = @[@1000, @5000, @10000, @50000];
+        nearbyUsersMinimumLocationChangeToUpdateServer = 50;
+        
+        publicChatRoomLifetimeMinutes = 7 * 60 * 24;
+        
+        searchIndexes = @[bUserNameKey, bUserEmailKey, bUserPhoneKey, bUserNameLowercase];
+        
+        vibrateOnNewMessage = YES;
+        
+        showMessageAvatarAtPosition = bMessagePosLast;
+        
+        messageBubbleMaskFirst = @"chat_bubble_right_0S.png";
+        messageBubbleMaskMiddle = @"chat_bubble_right_SS.png";
+        messageBubbleMaskLast = @"chat_bubble_right_ST.png";
+        messageBubbleMaskSingle = @"chat_bubble_right_0T.png";
+        
+        nameLabelPosition = bNameLabelPositionBottom;
+        combineTimeWithNameLabel = NO;
+        
+        publicChatAutoSubscriptionEnabled = NO;
+        enableWebCompatibility = NO;
+        enableCompatibilityWithV4 = YES;
+        
+        messageColorMe = bDefaultMessageColorMe;
+        messageColorReply = bDefaultMessageColorReply;
+        
+    }
+    return self;
+}
 
  -(id) remoteConfigValueForKey: (NSString *) key {
      return remote[key];
  }
 
- -(void) updateRemoteConfig: (NSDictionary *) dict {
-     for (id key in dict.allKeys) {
-         remote[key] = dict[key];
-     }
- }
+-(void) setRemoteConfig: (NSDictionary *) dict {
+    [remote removeAllObjects];
+    for (id key in dict.allKeys) {
+        remote[key] = dict[key];
+    }
+}
 
  -(void) setRemoteConfigValue: (id) value forKey: (NSString *) key {
      remote[key] = value;

@@ -75,7 +75,7 @@
         }
 
         NSString * profileURL = [provider.photoURL absoluteString];
-        if (profileURL && ![self.model.meta metaStringForKey:bUserImageURLKey]) {
+        if (profileURL && !_model.imageURL) {
             [self setProfilePictureWithImageURL:profileURL];
             profilePictureSet = YES;
         }
@@ -85,20 +85,18 @@
     // Must set name before robot image to ensure they are different
     // Must be set outside of the provider loop as anonymous logins don't user data prodivers
     if (!_model.name) {
-        _model.name = BChatSDK.shared.configuration.defaultUserName;
+        _model.name = BChatSDK.config.defaultUserName;
     }
     
-    if (!profilePictureSet && ![self.model.meta metaStringForKey:bUserImageURLKey]) {
+    if (!profilePictureSet && !_model.imageURL) {
         
         // If the user doesn't have a default profile picture then set it automatically
         UIImage * defaultImage = [self.model.defaultImage resizedImage:bProfilePictureSize interpolationQuality:kCGInterpolationHigh];
         
         // Update the user
         [self.model setImage:UIImagePNGRepresentation(defaultImage)];
+        [self setIdenticon];
         
-        if(self.model.name) {
-            [self setPersonProfilePicture];
-        }
     }
     
     if(!self.model.availability) {
@@ -108,30 +106,15 @@
 }
 
 - (RXPromise *)setProfilePictureWithImageURL: (NSString *)url {
-    
-    id<PUser> user = BChatSDK.currentUser;
-    
+        
     // Only set the user picture if they are logging on the first time
-    if (url && !user.image) {
+    [_model setImageURL:url];
+    
+    if (url && !_model.image) {
         
         return [BCoreUtilities fetchImageFromURL:[NSURL URLWithString:url]].thenOnMain(^id(UIImage * image) {
-            
             if(image) {
-                
-                [user setImage:UIImagePNGRepresentation(image)];
-                
-                if(BChatSDK.upload) {
-                    return [BChatSDK.upload uploadImage:image].thenOnMain(^id(NSDictionary * urls) {
-                        
-                        [user setImageURL:urls[bImagePath]];
-
-                        return [BChatSDK.core pushUser];
-                    }, Nil);
-                }
-                else {
-                    return [BChatSDK.core pushUser];
-                }
-                
+                [_model setImage:UIImagePNGRepresentation(image)];
             }
             return image;
         }, Nil);
@@ -140,15 +123,9 @@
     return nil;
 }
 
-- (void)setRobotProfilePicture {
-    NSString * name = [self.model.name stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSString * url = [NSString stringWithFormat: @"https://robohash.org/%@.png", name];
-    [self setProfilePictureWithImageURL:url];
-}
-
--(void) setPersonProfilePicture {
-    NSString * name = [self.model.name stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSString * url = [NSString stringWithFormat: @"http://flathash.com/%@.png", name];
+- (void) setIdenticon {
+    NSString * name = [self.model.entityID stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString * url = [NSString stringWithFormat: @"http://identicon.sdk.chat/%@.png", self.model.entityID];
     [self setProfilePictureWithImageURL:url];
 }
 
@@ -448,16 +425,16 @@
     [userOnlineRef setValue:@YES];
     [userOnlineRef onDisconnectSetValue:@NO];
 
-    FIRDatabaseReference * onlineRef = [FIRDatabaseReference onlineRef:self.entityID];
-    [onlineRef setValue:@{bTimeKey: [FIRServerValue timestamp],
-                          bUID: _model.entityID}];
-    
-    [onlineRef onDisconnectRemoveValue];
+//    FIRDatabaseReference * onlineRef = [FIRDatabaseReference onlineRef:self.entityID];
+//    [onlineRef setValue:@{bTimeKey: [FIRServerValue timestamp],
+//                          bUID: _model.entityID}];
+//
+//    [onlineRef onDisconnectRemoveValue];
 }
 
 -(void) goOffline {
     [[FIRDatabaseReference userOnlineRef:self.entityID] removeValue];
-    [[FIRDatabaseReference onlineRef:self.entityID] removeValue];
+//    [[FIRDatabaseReference onlineRef:self.entityID] removeValue];
 //    [userOnlineRef setValue:@NO];
 }
 

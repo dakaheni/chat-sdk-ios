@@ -8,6 +8,7 @@
 
 #import "BTextInputView.h"
 #import <ChatSDK/Core.h>
+#import <ChatSDK/UI.h>
 
 #define bMargin 8.0
 
@@ -38,8 +39,11 @@ int currentNumberOfLines = 0;
     if (self) {
         
 //        self.barTintColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
-        self.backgroundColor = [UIColor whiteColor];
         
+        if (@available(iOS 13.0, *)) {
+            self.backgroundColor = [UIColor systemBackgroundColor];
+        } 
+
         // Decide how many lines the message should have
         minLines = bMinLines;
         maxLines = bMaxLines;
@@ -47,8 +51,19 @@ int currentNumberOfLines = 0;
         maxCharacters = bMaxCharacters;
         
         // Set the text color
+
         _placeholderColor = [BCoreUtilities colorWithAlphaHexString:BChatSDK.config.textInputPlaceholderColor];
         _textColor = [BCoreUtilities colorWithAlphaHexString:BChatSDK.config.textInputTextColor];
+
+        // DM darkGrayColor
+        
+//        if (@available(iOS 13.0, *)) {
+//            _placeholderColor = [UIColor systemGrayColor];
+//        } else {
+//            _placeholderColor = [UIColor grayColor];
+//        }
+//
+//        _textColor = [UIColor blackColor];
 
         // Create an options button which shows an action sheet
         _optionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -143,7 +158,13 @@ int currentNumberOfLines = 0;
         [self updateInterfaceForReachabilityStateChange];
         
         UIView * topMarginView = [[UIView alloc] initWithFrame:CGRectZero];
-        topMarginView.backgroundColor = [UIColor lightGrayColor];
+        
+        // DM lightGrayColor
+        if (@available(iOS 13.0, *)) {
+            topMarginView.backgroundColor = [UIColor systemGray5Color];
+        } else {
+            topMarginView.backgroundColor = [UIColor lightGrayColor];
+        }
         
         [self addSubview:topMarginView];
         
@@ -314,7 +335,13 @@ int currentNumberOfLines = 0;
     [_sendBarDelegate.view hideAllToasts];
     [_placeholderLabel setText:[NSBundle t:bWriteSomething]];
     CSToastStyle * style = [[CSToastStyle alloc] initWithDefaultStyle];
-    style.backgroundColor = [UIColor redColor];
+
+    if (@available(iOS 13.0, *)) {
+        style.backgroundColor = [UIColor systemRedColor];
+    } else {
+        style.backgroundColor = [UIColor redColor];
+    }
+
     [_sendBarDelegate.view makeToast:[NSBundle t:bCancelled]
                             duration:1
                             position:[NSValue valueWithCGPoint: CGPointMake(_sendBarDelegate.view.frame.size.width / 2.0, self.frame.origin.y - self.frame.size.height - 20)] style:style];
