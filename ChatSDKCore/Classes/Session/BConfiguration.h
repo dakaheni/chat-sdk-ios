@@ -148,6 +148,8 @@ typedef enum {
 
 // Message fonts
 @property (nonatomic, readwrite) UIFont * messageTextFont;
+@property (nonatomic, readwrite) NSString * messageTextColorMe;
+@property (nonatomic, readwrite) NSString * messageTextColorReply;
 
 @property (nonatomic, readwrite) UIFont * messageTimeFont;
 @property (nonatomic, readwrite) UIFont * messageNameFont;
@@ -265,6 +267,9 @@ typedef enum {
 @property (nonatomic, readwrite) int publicChatRoomLifetimeMinutes;
 
 @property (nonatomic, readwrite) BOOL vibrateOnNewMessage;
+
+@property (nonatomic, readwrite) NSString * messageColorMe;
+@property (nonatomic, readwrite) NSString * messageColorReply;
 
 +(BConfiguration *) configuration;
 

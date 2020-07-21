@@ -222,7 +222,7 @@
         enableCompatibilityWithV4 = YES;
         
         messageColorMe = bDefaultMessageColorMe;
-        messageColorReply = bDefaultMessageColorReply;
+        messageColorReply = bDefaultMessageColorReply;        
         
     }
     return self;

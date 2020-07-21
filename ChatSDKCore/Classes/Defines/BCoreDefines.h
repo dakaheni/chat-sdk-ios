@@ -23,4 +23,7 @@
 #define bDefaultTextInputTextColor @"000000"
 #define bDefaultTextInputPlaceholderColor @"555555"
 
+#define bDefaultMessageColorMe @"abcff4"
+#define bDefaultMessageColorReply @"d7d4d3"
+
 #endif /* BCoreDefines_h */
