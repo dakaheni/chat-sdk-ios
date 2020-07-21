@@ -54,48 +54,50 @@
 @synthesize disablePresence;
 @synthesize disableProfileUpdateOnAuthentication;
 @synthesize developmentModeEnabled;
+@synthesize messageSelectionEnabled;
+
+@synthesize vibrateOnNewMessage;
+
+@synthesize showMessageAvatarAtPosition;
+@synthesize messageBubbleMaskFirst;
+@synthesize messageBubbleMaskMiddle;
+@synthesize messageBubbleMaskLast;
+@synthesize messageBubbleMaskSingle;
+@synthesize nameLabelPosition;
+@synthesize combineTimeWithNameLabel;
+
+@synthesize inviteByEmailTitle;
+@synthesize inviteByEmailBody;
+@synthesize inviteBySMSBody;
+@synthesize audioMessageMaxLengthSeconds;
+@synthesize maxImageDimension;
+
+@synthesize xmppPort;
+@synthesize xmppDomain;
+@synthesize xmppResource;
+@synthesize xmppHostAddress;
+@synthesize xmppMucMessageHistory;
+@synthesize xmppAdvancedConfigurationEnabled;
+
+@synthesize textInputViewMaxLines;
+@synthesize textInputViewMaxCharacters;
+@synthesize shouldAskForNotificationsPermission;
+@synthesize xmppAuthType;
+
+@synthesize nearbyUserDistanceBands;
+@synthesize publicChatRoomLifetimeMinutes;
+@synthesize nearbyUsersMinimumLocationChangeToUpdateServer;
+
+@synthesize publicChatAutoSubscriptionEnabled;
+@synthesize remote;
+@synthesize remoteConfigEnabled;
 
 @synthesize messageColorMe;
 @synthesize messageColorReply;
-
- @synthesize vibrateOnNewMessage;
-
- @synthesize showMessageAvatarAtPosition;
- @synthesize messageBubbleMaskFirst;
- @synthesize messageBubbleMaskMiddle;
- @synthesize messageBubbleMaskLast;
- @synthesize messageBubbleMaskSingle;
- @synthesize nameLabelPosition;
- @synthesize combineTimeWithNameLabel;
-
- @synthesize inviteByEmailTitle;
- @synthesize inviteByEmailBody;
- @synthesize inviteBySMSBody;
- @synthesize audioMessageMaxLengthSeconds;
- @synthesize maxImageDimension;
-
- @synthesize xmppPort;
- @synthesize xmppDomain;
- @synthesize xmppResource;
- @synthesize xmppHostAddress;
- @synthesize xmppMucMessageHistory;
-
- @synthesize textInputViewMaxLines;
- @synthesize textInputViewMaxVisibleLines;
- @synthesize textInputViewMaxCharacters;
- @synthesize textInputBackgroundColor;
- @synthesize textInputTextColor;
- @synthesize textInputPlaceholderColor;
- @synthesize shouldAskForNotificationsPermission;
- @synthesize xmppAuthType;
-
- @synthesize nearbyUserDistanceBands;
- @synthesize publicChatRoomLifetimeMinutes;
- @synthesize nearbyUsersMinimumLocationChangeToUpdateServer;
-
- @synthesize publicChatAutoSubscriptionEnabled;
- @synthesize remote;
- @synthesize remoteConfigEnabled;
+@synthesize textInputViewMaxVisibleLines;
+@synthesize textInputBackgroundColor;
+@synthesize textInputTextColor;
+@synthesize textInputPlaceholderColor;
 
 @synthesize firebaseApp;
 @synthesize firebaseStorageURL;
@@ -165,6 +167,7 @@
         showLocalNotificationsForPublicChats = NO;
         
         shouldAskForNotificationsPermission = YES;
+        messageSelectionEnabled = YES;
                 
         showProfileViewOnTap = YES;
         
@@ -186,6 +189,7 @@
         [self configureXMPPFromPlist];
         
         xmppMucMessageHistory = 20;
+        xmppAdvancedConfigurationEnabled = YES;
         
         messageDeletionListenerLimit = 30;
         messageHistoryDownloadLimit = 30;
@@ -209,10 +213,10 @@
         
         showMessageAvatarAtPosition = bMessagePosLast;
         
-        messageBubbleMaskFirst = @"chat_bubble_right_0S.png";
-        messageBubbleMaskMiddle = @"chat_bubble_right_SS.png";
-        messageBubbleMaskLast = @"chat_bubble_right_ST.png";
-        messageBubbleMaskSingle = @"chat_bubble_right_0T.png";
+        messageBubbleMaskFirst = @"chat_bubble_right_0S";
+        messageBubbleMaskMiddle = @"chat_bubble_right_SS";
+        messageBubbleMaskLast = @"chat_bubble_right_ST";
+        messageBubbleMaskSingle = @"chat_bubble_right_0T";
         
         nameLabelPosition = bNameLabelPositionBottom;
         combineTimeWithNameLabel = NO;

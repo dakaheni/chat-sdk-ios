@@ -23,7 +23,7 @@
     if (self) {
  
         self.title = [NSBundle t:bChatRooms];
-        self.tabBarItem.image = [NSBundle uiImageNamed: @"icn_30_public.png"];
+        self.tabBarItem.image = [NSBundle uiImageNamed: @"icn_30_public"];
 
     }
     return self;
@@ -90,7 +90,7 @@
 -(void) reloadData {
     [_threads removeAllObjects];
     
-    NSArray * threads = [BChatSDK.core threadsWithType:bThreadTypePublicGroup];
+    NSArray * threads = [BChatSDK.thread threadsWithType:bThreadTypePublicGroup];
     [_threads addObjectsFromArray:threads];
     
     [super reloadData];

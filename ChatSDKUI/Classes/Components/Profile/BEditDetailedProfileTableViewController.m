@@ -258,6 +258,8 @@
         [user setImage:UIImageJPEGRepresentation(_profileImage, 0.5)];
     }
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:bNotificationUserUpdated object:Nil userInfo:@{bNotificationUserUpdated_PUser: user}];
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -304,13 +306,6 @@
 
 - (IBAction)logoutButtonPressed:(id)sender {
     [self logout];
-}
-
-- (IBAction)clearLocalData:(id)sender {
-    [self logout].thenOnMain(^id(id success) {
-        [BChatSDK.db deleteAllData];
-        return Nil;
-    }, Nil);
 }
 
 - (void)didReceiveMemoryWarning {

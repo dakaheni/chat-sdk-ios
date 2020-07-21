@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         self.title = [NSBundle t:bFlagged];
-        self.tabBarItem.image = [NSBundle uiImageNamed: @"icn_30_info.png"];
+        self.tabBarItem.image = [NSBundle uiImageNamed: @"icn_30_info"];
     }
     return self;
 }
@@ -139,7 +139,7 @@
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        [BChatSDK.moderation deleteMessage:self.flaggedMessages[indexPath.row].entityID];
+        [BChatSDK.thread deleteMessage:self.flaggedMessages[indexPath.row].entityID];
     }];
     
     if (@available(iOS 13.0, *)) {
