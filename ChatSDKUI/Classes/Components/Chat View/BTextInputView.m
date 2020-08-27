@@ -85,8 +85,18 @@ int currentNumberOfLines = 0;
         
         [_optionsButton addTarget:self action:@selector(optionsButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         
-        NSString * sendButtonTitle = [NSBundle t:bSend];
-        [_sendButton setTitle:sendButtonTitle forState:UIControlStateNormal];
+        if (BChatSDK.config.imageSendButton == nil) {
+            NSString * sendButtonTitle = BChatSDK.config.titleSendButton;
+            [_sendButton setTitle:sendButtonTitle forState:UIControlStateNormal];
+            [_sendButton setImage:nil forState:UIControlStateNormal];
+        }
+        else {
+            [_sendButton setTitle:Nil forState:UIControlStateNormal];
+            [_sendButton setImage:BChatSDK.config.imageSendButton forState:UIControlStateNormal];
+        }
+//        NSString * sendButtonTitle = BChatSDK.config.titleSendButton;
+//        [_sendButton setTitle:sendButtonTitle forState:UIControlStateNormal];
+        
         
         [_sendButton addTarget:self action:@selector(sendButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [_sendButton addTarget:self action:@selector(sendButtonHeld) forControlEvents:UIControlEventTouchDown];
@@ -144,7 +154,7 @@ int currentNumberOfLines = 0;
         
         [_placeholderLabel setTextColor:_placeholderColor];
         
-        [_placeholderLabel setText:[NSBundle t:bWriteSomething]];
+        [_placeholderLabel setText:BChatSDK.config.textInputPlaceholderText];
         
         [self setFont:[UIFont systemFontOfSize:bFontSize]];
         
@@ -202,8 +212,17 @@ int currentNumberOfLines = 0;
                      forState:UIControlStateNormal];
     }
     else {
-        [_sendButton setTitle:[NSBundle t:bSend] forState:UIControlStateNormal];
-        [_sendButton setImage:Nil forState:UIControlStateNormal];
+//        [_sendButton setTitle:BChatSDK.config.titleSendButton forState:UIControlStateNormal];
+//        [_sendButton setImage:Nil forState:UIControlStateNormal];
+        if (BChatSDK.config.imageSendButton == nil) {
+            NSString * sendButtonTitle = BChatSDK.config.titleSendButton;
+            [_sendButton setTitle:sendButtonTitle forState:UIControlStateNormal];
+            [_sendButton setImage:nil forState:UIControlStateNormal];
+        }
+        else {
+            [_sendButton setTitle:Nil forState:UIControlStateNormal];
+            [_sendButton setImage:BChatSDK.config.imageSendButton forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -297,7 +316,7 @@ int currentNumberOfLines = 0;
 -(void) stopRecording {
     [[BAudioManager sharedManager] finishRecording];
     [_sendBarDelegate.view hideAllToasts];
-    [_placeholderLabel setText:[NSBundle t:bWriteSomething]];
+    [_placeholderLabel setText:BChatSDK.config.textInputPlaceholderText];
     [self cancelRecordingToastTimer];
 }
 
@@ -333,7 +352,7 @@ int currentNumberOfLines = 0;
 // If the user touches up off the button we cancel the recording
 - (void)sendButtonCancelled {
     [_sendBarDelegate.view hideAllToasts];
-    [_placeholderLabel setText:[NSBundle t:bWriteSomething]];
+    [_placeholderLabel setText:BChatSDK.config.textInputPlaceholderText];
 
     CSToastStyle * style = [[CSToastStyle alloc] initWithDefaultStyle];
     if (@available(iOS 13.0, *)) {

@@ -103,6 +103,7 @@ typedef enum {
 @property (nonatomic, readwrite) NSString *textInputBackgroundColor;
 @property (nonatomic, readwrite) NSString *textInputTextColor;
 @property (nonatomic, readwrite) NSString *textInputPlaceholderColor;
+@property (nonatomic, readwrite) NSString *textInputPlaceholderText;
 
 @property(nonatomic, readwrite) BOOL publicChatAutoSubscriptionEnabled;
 
@@ -292,5 +293,9 @@ typedef enum {
 -(id) remoteConfigValueForKey: (NSString *) key;
 -(void) setRemoteConfig: (NSDictionary *) dict;
 -(void) setRemoteConfigValue: (id) value forKey: (NSString *) key;
+
+//Send-Button
+@property (nonatomic, readwrite) NSString * titleSendButton;
+@property (nonatomic, readwrite) UIImage * imageSendButton;
 
 @end

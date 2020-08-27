@@ -98,6 +98,7 @@
 @synthesize textInputBackgroundColor;
 @synthesize textInputTextColor;
 @synthesize textInputPlaceholderColor;
+@synthesize textInputPlaceholderText;
 
 @synthesize firebaseApp;
 @synthesize firebaseStorageURL;
@@ -107,6 +108,9 @@
 @synthesize enableCompatibilityWithV4;
 
 @synthesize messageDeletionEnabled;
+
+@synthesize titleSendButton;
+@synthesize imageSendButton;
 
 -(instancetype) init {
     if((self = [super init])) {
@@ -226,7 +230,10 @@
         enableCompatibilityWithV4 = YES;
         
         messageColorMe = bDefaultMessageColorMe;
-        messageColorReply = bDefaultMessageColorReply;        
+        messageColorReply = bDefaultMessageColorReply;
+        
+        textInputPlaceholderText = bDefaultTextInputPlaceholderText;
+        titleSendButton = bTitleSendButton;
         
     }
     return self;

@@ -26,4 +26,7 @@
 #define bDefaultMessageColorMe @"abcff4"
 #define bDefaultMessageColorReply @"d7d4d3"
 
+#define bDefaultTextInputPlaceholderText [NSBundle t:bWriteSomething]
+#define bTitleSendButton [NSBundle t:bSend]
+
 #endif /* BCoreDefines_h */

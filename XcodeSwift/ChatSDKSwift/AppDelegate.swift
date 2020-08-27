@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         config.databaseVersion = "2"
         config.loginUsernamePlaceholder = "Email"
         config.messageSelectionEnabled = false
+        config.textInputPlaceholderText = "Test"
+//        config
 
         // Uncomment this if you want the user avatar and name before the messages
 //        config.nameLabelPosition = bNameLabelPositionTop
